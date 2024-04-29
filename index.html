@@ -41,8 +41,9 @@
                 <input type="text" class="form-control" id="task-title" required>
               </div>
               <div class="mb-3">
-                <label for="task-due-date" class="form-label">Task Due Date</label>
-                <input type="date" class="form-control" id="task-due-date" required>
+                <!-- task due date input -->
+              <label for="task-due-date" class="form-label">Task Due Date</label>
+              <input type="date" class="form-control datepicker" id="task-due-date" required> 
               </div>
               <div class="mb-3">
                 <label for="task-description" class="form-label">Task Description</label>
@@ -51,8 +52,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="saveTask()">Save Task</button>
+            <button type="button" class="btn btn-primary" id="saveTaskButton">Save Task</button>
           </div>
         </div>
       </div>
