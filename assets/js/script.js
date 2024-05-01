@@ -10,13 +10,24 @@ function generateTaskId() {
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
-
+    
 }
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-    // get items to render to 'To Do' section
+    // get task from local storage
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const listElement = document.getElementById('todo-cards');
+    listElement.innerHTML = '';  // Clear existing tasks
+    // loop through each task and create a visual card for it
+    tasks.forEach(task => {
+        // generate the html for the task card
+        const taskCard = createTaskCard(task);
+        // add the task card to the display container
+        listElement.appendChild(taskCard);
+    });
     // make cards draggable
+      $('.task-card').draggable({containment: "parent"});
 }
 
 // Todo: create a function to handle adding a new task
@@ -26,7 +37,7 @@ function handleAddTask(event){
     const taskTitle = document.getElementById("task-title").value;
     const taskDueDate = document.getElementById("task-due-date").value;
     const taskDescription = document.getElementById("task-description").value;
-    // add new task to task list
+    // create a new task with assigned ID and form values
     const newTask = {
         id: generateTaskId(),
         title:taskTitle,
