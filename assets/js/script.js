@@ -16,8 +16,10 @@ function createTaskCard(task) {
     const p1El = $('<p>').addClass('card-text').text(task.date)
     // create a paragraph element to display the description of the task
     const descriptionEl = $('<p>').addClass('card-text').text(task.description);
+    // create a delete button
+    const deleteButtonEl = $('<button>').addClass('btn btn-danger delete').text('Delete');
     // create a div element as a container for the card
-    const card = $('<div>').addClass('card task-card').append(header).append(p1El).append(descriptionEl);
+    const card = $('<div>').addClass('card task-card draggable my-3').append(header).append(p1El).append(descriptionEl).append(deleteButtonEl);
     return card;
 }
 
@@ -33,9 +35,9 @@ function renderTaskList() {
         const taskCard = createTaskCard(task);
         // add the task card to the display container
         listElement.appendChild(taskCard[0]);
-         // make newly created task card draggable
-      $('.task-card').draggable({containment: "parent"});
-    });
+        // make task card draggable
+        $('.task-card').draggable();
+});
 }
 
 // Todo: create a function to handle adding a new task
@@ -71,7 +73,7 @@ function handleDeleteTask(event){
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
-
+   
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
