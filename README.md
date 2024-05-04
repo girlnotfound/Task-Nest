@@ -36,7 +36,7 @@
 
 - JavaScript for the interactive elements and managing localStorage.
 
-- Bootstrap a popular tool that helps design responsive and attractive interfaces quickly. To make everything look neat and works well on different devices.
+- Bootstrap to improve user engagement and simplify the process of entering tasks.
 
 - jQuery UI to help with the drag and drop feature, allowing users to easily move tasks on the board.
 
