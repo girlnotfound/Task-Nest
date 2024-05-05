@@ -14,3 +14,12 @@ body {
 .task-card:hover {
   cursor: grab;
 }
+
+/* Added CSS to reflect when task is due soon or overdue */
+.task-due-soon {
+  background-color: yellow;
+}
+
+.task-past-due {
+  background-color: red;
+}
