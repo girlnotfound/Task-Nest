@@ -1,18 +1,17 @@
-// Retrieve tasks and nextId from localStorage
+// Retrieve tasks and nextId from localStorage or set default values if not found
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId"))  || 0;
 
-
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
-        // // make a new task ID and save it.
+        // Increase task ID and update it in local storage for task id
         nextId++ 
         localStorage.setItem('nextId', nextId);
 }
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
-    // to make a card for each task with a title, date, description and delete button
+    // create elements for task properties
     const $taskTitleEl = $('<h5>').attr('class', 'card-header');
     const $taskDate = $('<p>').attr('class', 'card-date');
     const $descriptionEl = $('<p>').attr('class', 'card-text');
@@ -20,7 +19,7 @@ function createTaskCard(task) {
     const $deleteButtonEl = $('<a>').attr('href', '#').attr('class', 'btn btn-primary deleteBtn').text('Delete').attr('id', task.id);
     const $cardEl = $('<div>').addClass('card dragbox').attr('id', task.id).css('margin', '5%');
     // to check if a task is overdue and to set the background color
-    const cardBackground = cardDue(task.date);
+    const cardBackground = cardState(task.date);
     // set the cards color based on how soon it is due
     $cardEl.addClass(cardBackground);
     // to fill in the tasks title, due date, and description on the card
@@ -45,15 +44,15 @@ function rendertaskList() {
     $inProgressEl.empty();
     $doneEl.empty();
     // loop through each task and create its visual card
-    for (items of taskList) {
+    for ( const items of taskList) {
         // create a visual card for the task
-        card = createTaskCard(items);
+        const card = createTaskCard(items);
         // place the card in its correct section based on its status
-        if (items.status == 'to-do') {
+        if (items.status === 'to-do') {
             $toDoEl.append(card);
-        } else if (items.status == 'in-progress') {
+        } else if (items.status === 'in-progress') {
             $inProgressEl.append(card);
-        } else {
+        } else if (items.status === 'done') {
             $doneEl.append(card);
         }
     }
@@ -109,12 +108,30 @@ function handleAddTask(event){
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
-    
+  
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
-  
+  // get the id of the task card that was dragged and dropped
+  const taskId = ui.draggable[0].id;
+  // get the id of the new category where the task was dropped
+  const newStatus = event.target.id;
+  // load the current list of tasks from local storage
+  const updateTasks = JSON.parse(localStorage.getItem('tasks'));
+  // loop through the list to find the task that was moved
+  for (let i = 0; i < updateTasks.length; i++) {
+    
+    const task = updateTasks[i];
+
+    if (task.id == taskId) {
+        task.status = newStatus;
+    }
+  }
+  // update local storage
+  localStorage.setItem('tasks', JSON.stringify(updateTasks));
+  // render the task list
+  rendertaskList();
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
