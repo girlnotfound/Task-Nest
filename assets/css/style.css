@@ -22,4 +22,5 @@ body {
 
 .task-past-due {
   background-color: red;
+  color: white;
 }
