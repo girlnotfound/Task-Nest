@@ -42,7 +42,7 @@
 
 ## Usage
 
-![Sceenshot of Task Nest Home Page]()
+![Sceenshot of Task Nest Home Page](./assets/images/TaskNestScreenshot.png)
 
 [Link to Deployed Website](https://girlnotfound.github.io/Task-Nest/)
 
