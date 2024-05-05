@@ -2,6 +2,11 @@
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId"))  || 0;
 
+// reference the task list containers in the HTML
+const $toDoEl = $('#todo-cards');
+const $inProgressEl = $('#in-progress-cards');
+const $doneEl = $('#done-cards');
+
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
         // Increase task ID and update it in local storage for task id
@@ -108,7 +113,20 @@ function handleAddTask(event){
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
-  
+    // get the id of the task to be deleted
+    const deleteId = event.target.id;
+    // load the current list of tasks from the local storage
+    let taskList = JSON.parse(localStorage.getItem("tasks"));
+    // go through the list and remove the task with the same id
+    taskList.forEach(function(task, index) {
+      if (task.id == deleteId) {
+        taskList.splice(index, 1);
+      }
+    });
+    // update local storage
+    localStorage.setItem('tasks', JSON.stringify(taskList));
+    // render the task list
+    rendertaskList();
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
@@ -132,6 +150,24 @@ function handleDrop(event, ui) {
   localStorage.setItem('tasks', JSON.stringify(updateTasks));
   // render the task list
   rendertaskList();
+}
+
+// define a function to determine the urgency of a task based on its due date
+function cardState(cardDate) {
+    // get today's date
+    const today = dayjs();
+    // convert the task's due date into a format we can compare
+    const date1 = dayjs(cardDate);
+    // calculate the difference in days between today and the task's due date
+    const dateDiff = today.diff(date1, 'day');
+    // check the difference and categorize the task based on how overdue it is
+    if (dateDiff > 1) {
+        return 'task-past-due';
+    } else if (dateDiff > -2 && dateDiff < 1) {
+        return 'task-due-soon';
+    } else {
+        return 'task-current';
+    };
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
